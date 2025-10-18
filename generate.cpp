@@ -1,8 +1,17 @@
-
-
 #include <iostream>
+#include <string>
+using namespace std;
 
-int main() {
+int main(int argc, char* argv[]) {
+    
+    string title = "Ozarow";
+
+  
+    if (argc > 1) {
+        title = argv[1];
+    }
+
+    
     std::cout << R"(<!DOCTYPE html>
 <html>
   <head>

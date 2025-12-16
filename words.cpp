@@ -12,23 +12,31 @@ int main(int argc, char* argv[]) {
     if(in.is_open()){
         cout << "файл открытий" << endl;
         while(getline(in, sos)){
-            v.push_back(sos);
+             if(in.is_open()){
+        cout << "файл открытий" << endl;
+        while(getline(in, sos)){
+             string word;
+               for(char s : sos){
+    if(s != ' '){
+        word += s;
+    }
+    else {
+        v.push_back(word);
+        word = "";
+    }
+}
+
+
+if (!word.empty()) {
+    v.push_back(word);
+}
         }
 
         string word;
-        for(int i = 0; i < v.size(); i++){
-            while(getline(in, sos)){
-                for(char s : sos){
-                    if(s != ' '){
-                        word = s;
-                    }
-                    if(s == ' '){
-                        v.push_back(word);
-                    }
-                }
-            }
-        }
+      
+   
 
+                   
         int resultIndex = 0;
         for(int i = 1; i < v.size(); i++){
             if(v[i].size() < v[resultIndex].size()){
@@ -43,3 +51,4 @@ int main(int argc, char* argv[]) {
         in.close();
     }
 }
+    }}

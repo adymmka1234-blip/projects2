@@ -4,57 +4,50 @@
 #include <iostream>
 using namespace std;
 
-std::vector<std::string> v;
-std::string sos;
-std::ifstream in("searcher");
-int resultIndex = 0;
-string word;
+vector<string> search() {
+    vector<string> v;
+    ifstream in("searcher");
+    string line, word;
 
-void c(int argc, char* argv[]) {
-    if(in.is_open()){
-        cout << "файл открытий" << endl;
-        while(getline(in, sos)){
-           for(char s : sos){
-    if(s != ' '){
-        word += s;
-    } else {
-        if(!word.empty()) {
-            v.push_back(word);
+    if (in.is_open()) {
+        cout<<"file is open"<<endl;
+        while (getline(in, line)) {
             word = "";
-        }
-    }
-}
-
-if(!word.empty()) {
-    v.push_back(word);
-    word = "";
-}
-
+            for (char c : line) {
+                if (c != ' ')
+                    word += c;
+                else if (!word.empty()) {
+                    v.push_back(word);
+                    word = "";
+                }
+            }
+            if (!word.empty()) {
+                v.push_back(word);
             }
         }
-       
     }
 
+    return v; 
+}
 
-void finding() {
-    for(int i = 1; i < v.size(); i++){
-        if(v[i].size() < v[resultIndex].size()){
-            continue;
-        }
-        if(v[i].size() > v[resultIndex].size()){
+int finding() {
+    vector<string> v = search();
+
+    int resultIndex = 0;
+    for (int i = 1; i < v.size(); i++) {
+        if (v[i].size() > v[resultIndex].size()) {
             resultIndex = i;
         }
     }
-   in.close();
+
+    
+
+    return resultIndex; 
 }
 
 int main(int argc, char* argv[]) {
-    c(argc, argv);
+    search();
+    finding();
 
-     if (!v.empty()) {
-        finding();
-        cout << v[resultIndex] << endl;}
     return 0;
-    
 }
- 

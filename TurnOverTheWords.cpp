@@ -2,43 +2,59 @@
 #include <vector>
 #include <string>
 #include <iostream>
-using namespace std;
 #include <algorithm>
+using namespace std;
 
-vector <string> ReadingAllLines(const string& fileName,const vector<string> & lines){
-ifstream in(fileName);
-ofstream out("result");
-vector <string> result;
-
-string line;
-
-if (!in.is_open()) {
-        cerr << "file not found: " << fileName<< endl;
-}    
-while(getline(in,line)){
-result.push_back(line);
-}
-    for(const string& line:lines){
-    for(string word:lines){
- for(int i = word.length() - 1; i >= 0; i--) {
-    out << word[i];
-}
+string ReadingContent(const string& FileName) {
+    ifstream in(FileName);
+    if (!in.is_open()) {
+        cerr << "file not found: " << FileName << endl;
+        exit(1);
     }
-    }
-   return result;
+    return FileName;
 }
-           
-int main(int argc,char**argv){
-     string fileName=argv[1];
-    if(argc!=2){
+
+vector<string> ProcessData(const string& fileName) {
+    ifstream in(fileName);
+    string line;
+    vector<string> result;
+
+    while (getline(in, line)) {
+        result.push_back(line);
+    }
+    return result;
+}
+
+vector<string> TurnOverTheWords(vector<string> lines) {
+    for (string &word : lines) {
+        reverse(word.begin(), word.end());
+    }
+    return lines;
+}
+
+void WriteData(const vector<string>& lines) {
+    ofstream out("result");
+
+    for (string word : lines) {
+        out << word << endl;
+        cout << word << " ";
+    }
+}
+
+int main(int argc, char** argv) {
+
+    if (argc != 2) {
         cout << "Usage: " << argv[0] << " <filename>" << endl;
         return 1;
     }
-   
-   vector <string> lines=ReadingAllLines(fileName,lines);
-   for(string word:lines){
-    cout << word << " ";
 
- }  
- return 0;  
+    string fileName = argv[1];
+
+    string lines = ReadingContent(fileName);
+    vector<string> data = ProcessData(lines);
+    vector<string> words = TurnOverTheWords(data);
+
+    WriteData(words);
+
+    return 0;
 }

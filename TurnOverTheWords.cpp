@@ -53,7 +53,6 @@ int main(int argc, char** argv) {
     string lines = ReadingContent(fileName);
     vector<string> data = ProcessData(lines);
     vector<string> words = TurnOverTheWords(data);
-
     WriteData(words);
 
     return 0;

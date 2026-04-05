@@ -5,10 +5,10 @@
 #include <algorithm>
 using namespace std;
 
-string reading (const  string& fileName) {
+string reading (const string& fileName) {
 ifstream in(fileName);
 if (!in.is_open() ) {
-    cout<<"File is not open"<<endl;
+    cout << "File is not open" << endl;
 }
 return fileName;
 }
@@ -26,10 +26,10 @@ return result;
 vector <string> SortWords(vector <string> lines ) {
 string word;
 int n = lines.size();
-for (int i =0;i<n-1;i++) {
+for (int i =0; i<n-1;i++) {
     for (int j=0;j< n - i - 1;j++) {
         if (lines[j]>lines[j+1]){
-            swap(lines[j],lines[j+1]);
+            swap (lines[j], lines[j+1]);
         }
     }
    
@@ -44,7 +44,7 @@ void WriteData(const vector<string>& lines) {
     }
 }
 int main (int argc,char**argv ) {
-    if (argc!=2) {
+    if (argc!= 2) {
         cout << "Usage: " << argv[0] << " <filename>" << endl;
         return 1;
 }

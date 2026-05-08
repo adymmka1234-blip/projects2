@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -12,11 +11,11 @@ using namespace std;
 *@return fileName which is shows his state
 */
 string reading(const string& fileName) {
-ifstream in(fileName);
-if (!in.is_open() ) {
-    cout << "File is not open" << endl;
-}
-return fileName;
+    ifstream in(fileName);
+    if (!in.is_open() ) {
+        cout << "File is not open" << endl;
+    }
+    return fileName;
 }
 
 /*
@@ -24,60 +23,55 @@ return fileName;
 * @return vector of words from the lines.
 */
 vector <string> processData(const string& fileName) {
-string line;
-ifstream in(fileName);
-vector <string> result;
-    while (getline (in, line)) {
-        result.push_back(line);
+    string word;
+    ifstream in(fileName);
+    vector <string> result;
+    while (in >> word) {
+        result.push_back(word);
     }
     return result;
 }
-
-
 
 /*
-*In first cicle after each iteration removes on one place
-*second cicle has the same idea but he is comparing first and the second to him word
-*if in first word has more letters and letters come first they change places and cicle will do it till the end 
+*Function is created for paste it into sortWords and to did code more readable.
 */
-vector <string> sortWords(vector <string> lines ) {
-    vector <string> result;
-    for (string line : lines) {
-        istringstream iss(line);
-        vector<string> words;
-        string word;
-        
-       
-        while (iss >> word) {
-            words.push_back(word);
-        }
-        sort(words.begin(), words.end());
-
-        
-        string sortedLine = "";
-        for (int i = 0; i < words.size(); i++) {
-            sortedLine += words[i];
-            if (i != words.size() - 1) {
-                sortedLine += " ";
-            }
-        }
-
-        result.push_back(sortedLine);
+int compareWords (string w1, string w2) {
+    if (w1 < w2) {
+        return -1;
     }
-
-    return result;
+    if (w1 > w2) {
+        return +1;
+    }
+    if (w1 == w2) {
+        return 0;
+    }
+    return 0;
+}
+/*
+*The function uses an bubble algorithm and compares words between and if the condition is met swap them.
+*@returns sorted file.
+*/
+vector <string> sortWords(vector <string> words) {
+    int n = words.size();
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (compareWords(words[j], words[j + 1]) > 0) {
+                    swap(words[j], words[j + 1]);
+            }         
+        }   
+    }
+    return words;
 }
 
-
 /* 
- *The function takes a variable named lines as an argument
- * works with file name and writes the result into it
+ *The function takes a variable named lines as an argument.
+ * works with file name and writes the result into it.
  */
 void WriteData(const vector<string>& lines) {
     ofstream out("result");
     for (string word: lines) {  
         out << word << endl;
-        cout << word << "" << endl;
+        cout << word << endl;
     }
 }
 int main(int argc,char**argv ) {
@@ -85,8 +79,8 @@ int main(int argc,char**argv ) {
         cout << "Usage:" << argv[0] << "<filename>" << endl;
         return 1;
     }
-
-    string fileName= argv[1];
+   
+    string fileName = argv[1];
     string read = reading(fileName);
     vector <string> data = processData(read);
     vector <string> sort = sortWords(data);

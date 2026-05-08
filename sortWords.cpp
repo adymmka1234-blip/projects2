@@ -47,6 +47,7 @@ int compareWords (string w1, string w2) {
     }
     return 0;
 }
+
 /*
 *The function uses an bubble algorithm and compares words between and if the condition is met swap them.
 *@returns sorted file.

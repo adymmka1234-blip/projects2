@@ -4,6 +4,8 @@
 #include <vector>
 #include <algorithm>
 #include <sstream>
+#include <cstdlib> 
+#include <cctype>
 using namespace std;
 
 /*
@@ -16,7 +18,7 @@ string reading(const string& fileName) {
         cout << "File is not open" << endl;
     }
     return fileName;
-}
+}           
 
 /*
 *reads and also writes into vector result.
@@ -32,42 +34,69 @@ vector <string> processData(const string& fileName) {
     return result;
 }
 
-/*
-*Function is created for paste it into sortWords and to did code more readable.
-*/
-int compareWords (string w1, string w2) {
-    if (w1 < w2) {
+
+/*it is created for numbers like an assistant without here i can not work with numbers and ort at the right way*/
+
+int isNumbers(string word) {
+    for (char c : word) {
+        if (!isdigit(c)) {
+            return 0; 
+        }
+    }
+     return 1;
+}
+
+/*compares numbers and words to seat them in the right way:sorted numbers come first and then sorted words*/
+
+int compare(string w1, string w2) {
+      if (isNumbers(w1) && isNumbers(w2)) {
+
+    if (stoi(w1) < stoi(w2)) {
         return -1;
     }
-    if (w1 > w2) {
+
+    if (stoi(w1) > stoi(w2)) {
         return +1;
     }
-    if (w1 == w2) {
-        return 0;
+}
+if (!isNumbers(w1) && !isNumbers(w2)) {
+    if ((w1) < (w2)) {
+        return -1;
+    }
+    if ((w1) > (w2)) {
+        return +1;
+    }
+}
+    if (!isNumbers(w1) && isNumbers(w2)) {
+        return +1;
+    }
+    if (isNumbers(w1) && !isNumbers(w2)) {
+        return -1;
     }
     return 0;
 }
 
 /*
-*The function uses an bubble algorithm and compares words between and if the condition is met swap them.
+*The function uses an bubble algorithm and compares words and numbers between and if the condition is met swap them.
 *@returns sorted file.
 */
-vector <string> sortWords(vector <string> words) {
-    int n = words.size();
-    for (int i = 0; i < n - 1; i++) {
-        for (int j = 0; j < n - i - 1; j++) {
-            if (compareWords(words[j], words[j + 1]) > 0) {
-                    swap(words[j], words[j + 1]);
-            }         
-        }   
+    vector <string> sortWords(vector <string> words) {
+        int n = words.size();
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                if (compare(words[j], words[j + 1]) > 0) {
+                        swap(words[j], words[j + 1]);
+                }    
+            }   
+        }
+        return words;
     }
-    return words;
-}
 
 /* 
  *The function takes a variable named lines as an argument.
  * works with file name and writes the result into it.
  */
+
 void WriteData(const vector<string>& lines) {
     ofstream out("result");
     for (string word: lines) {  
@@ -75,7 +104,7 @@ void WriteData(const vector<string>& lines) {
         cout << word << endl;
     }
 }
-int main(int argc,char**argv ) {
+int main(int argc,char**argv) {
     if (argc != 2) {
         cout << "Usage:" << argv[0] << "<filename>" << endl;
         return 1;

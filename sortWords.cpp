@@ -48,32 +48,34 @@ int isNumbers(string word) {
 
 /*compares numbers and words to seat them in the right way:sorted numbers come first and then sorted words*/
 
-int compare(string w1, string w2) {
-      if (isNumbers(w1) && isNumbers(w2)) {
+bool compare(string w1, string w2) {
 
-    if (stoi(w1) < stoi(w2)) {
-        return -1;
+    if (isNumbers(w1) && isNumbers(w2)) {
+        if (stoi(w1) < stoi(w2)) {
+            return false;
+        }
+        if (stoi(w1) > stoi(w2)) {
+            return true;
+        }
     }
 
-    if (stoi(w1) > stoi(w2)) {
-        return +1;
-    }
+    if (!isNumbers(w1) && !isNumbers(w2)) {
+        if ((w1) < (w2)) {
+            return false;
+        }
+        if ((w1) > (w2)) {
+            return true;
+        }
 }
-if (!isNumbers(w1) && !isNumbers(w2)) {
-    if ((w1) < (w2)) {
-        return -1;
-    }
-    if ((w1) > (w2)) {
-        return +1;
-    }
-}
+
     if (!isNumbers(w1) && isNumbers(w2)) {
-        return +1;
+        return true;
     }
+
     if (isNumbers(w1) && !isNumbers(w2)) {
-        return -1;
+        return false;
     }
-    return 0;
+    return true;
 }
 
 /*
@@ -84,7 +86,7 @@ if (!isNumbers(w1) && !isNumbers(w2)) {
         int n = words.size();
         for (int i = 0; i < n - 1; i++) {
             for (int j = 0; j < n - i - 1; j++) {
-                if (compare(words[j], words[j + 1]) > 0) {
+                if (compare(words[j], words[j + 1])) {
                         swap(words[j], words[j + 1]);
                 }    
             }   

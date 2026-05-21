@@ -37,13 +37,13 @@ vector <string> processData(const string& fileName) {
 
 /*it is created for numbers like an assistant without here i can not work with numbers and ort at the right way*/
 
-int isNumbers(string word) {
+bool isNumbers(string word) {
     for (char c : word) {
         if (!isdigit(c)) {
-            return 0; 
+            return false; 
         }
     }
-     return 1;
+     return true;
 }
 
 /*compares numbers and words to seat them in the right way:sorted numbers come first and then sorted words*/

@@ -43,41 +43,42 @@ bool isNumbers(string word) {
             return false; 
         }
     }
-     return true;
+   return true;
 }
 
-/*compares numbers and words to seat them in the right way:sorted numbers come first and then sorted words*/
-
-bool compare(string w1, string w2) {
-
+/*compares numbers and words to set them in the right way:sorted numbers come first and then sorted words*/
+/*nuzno 3 znaczenia: bolshe,menshe,rawno*/
+int compare(string w1, string w2) {
     if (isNumbers(w1) && isNumbers(w2)) {
+
         if (stoi(w1) < stoi(w2)) {
-            return false;
+            return -1;
         }
+
         if (stoi(w1) > stoi(w2)) {
-            return true;
+            return 1;
         }
     }
 
     if (!isNumbers(w1) && !isNumbers(w2)) {
-        if ((w1) < (w2)) {
-            return false;
+        if (w1 < w2) {
+            return -1;
         }
-        if ((w1) > (w2)) {
-            return true;
+
+        if (w1 > w2) {
+            return 1;
         }
-}
+    }
 
     if (!isNumbers(w1) && isNumbers(w2)) {
-        return true;
+        return 1;
     }
 
     if (isNumbers(w1) && !isNumbers(w2)) {
-        return false;
+        return -1;
     }
-    return true;
+    return 0;
 }
-
 /*
 *The function uses an bubble algorithm and compares words and numbers between and if the condition is met swap them.
 *@returns sorted file.
@@ -86,7 +87,7 @@ bool compare(string w1, string w2) {
         int n = words.size();
         for (int i = 0; i < n - 1; i++) {
             for (int j = 0; j < n - i - 1; j++) {
-                if (compare(words[j], words[j + 1])) {
+                if (compare(words[j], words[j + 1]) > 0) {
                         swap(words[j], words[j + 1]);
                 }    
             }   
